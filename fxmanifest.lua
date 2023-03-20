@@ -5,4 +5,7 @@ lua54 'yes'
 
 author 'Mycroft'
 description 'Harry Potter Wand in FiveM!'
-client_script 'client.lua'
+client_scripts {
+    'config.lua',
+    'client.lua'
+}

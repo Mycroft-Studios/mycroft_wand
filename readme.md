@@ -14,9 +14,10 @@ What are you waiting For? Hop on your broom and become the WiZ-Wiz-Wizard you ha
 - Highly Configurable
 - API-Like Code Format
 - Funny Names!
-- Toggleable
+- Command/KeyMapping To Toggle Useage (`wand` or the `HOME` key)
 - Key Bindings to go bwetween spells (PAGE UP/DOWN)
 - Cuurent Spell drawn on screen
+- Colour Coded Spell Status (White: avaiable, Red: In Use, Blue: Cooldown)
 - Actual Wand Model - [Download Here](https://www.gta5-mods.com/weapons/harry-potter-wand)
 - MAYHEM AND CARNAGE
 
