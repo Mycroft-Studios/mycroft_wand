@@ -20,13 +20,15 @@ local currentSpell = 1
 local Handle = nil
 local obj = nil
 RegisterCommand('wand', function()
-	wanding = not wanding
-	if not wanding then return RemoveParticleFx(Handle, false) end
-	local player = PlayerId()
 	local ped = PlayerPedId()
 	local getsuc, wephash = GetCurrentPedWeapon(ped, true)
 	if not getsuc then return end
 	if wephash ~= Config.ModelName then return end
+
+	wanding = not wanding
+	if not wanding then return RemoveParticleFx(Handle, false) end
+	local player = PlayerId()
+
 	if not HasNamedPtfxAssetLoaded("core") then
 		RequestNamedPtfxAsset("core")
 		while not HasNamedPtfxAssetLoaded("core") do
@@ -47,6 +49,7 @@ RegisterCommand('wand', function()
 		SetParticleFxLoopedColour(Handle, 0.1, 1.0, 0.0, false)
 	end
 	while wanding do
+		SetPedAmmo(ped, Config.ModelName, 0)
 		DisableControlAction(0, 24, true)
 		DisablePlayerFiring(player, true)
 		ped = PlayerPedId()
@@ -96,8 +99,8 @@ RegisterCommand('wand', function()
 			end
 		end
 		getsuc, wephash = GetCurrentPedWeapon(ped, true)
-		if not getsuc then return RemoveParticleFx(Handle, false) end
-		if wephash ~= Config.ModelName then return RemoveParticleFx(Handle, false) end
+		if not getsuc then RemoveParticleFx(Handle, false) wanding = false break end
+		if wephash ~= Config.ModelName then RemoveParticleFx(Handle, false) wanding = false break end
 		DrawSpellDescription()
 		DrawSpellName()
 		Wait(0)
