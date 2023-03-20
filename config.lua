@@ -6,7 +6,9 @@ Config.Spells = {
 		description = "Expulso -> Spawns Explosions",
 		action = function(hit, coords, entity)
 			AddExplosion(coords.x, coords.y, coords.z, 9, 100.0, true, false, 0)
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable spell :)
+        Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Spawnus My Anus!", -- based upon Erecto - Erects tents or other structures
@@ -23,7 +25,9 @@ Config.Spells = {
 			SetEntityHeading(obj, math.random(-180, 180))
 			SetEntityVelocity(obj, 0.0, 0.0, 0.2)
 			SetEntityAsNoLongerNeeded(obj)
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "WingGuard la LeviAsshole!", -- based upon wingardium leviosa
@@ -49,7 +53,9 @@ Config.Spells = {
 				if not entity or not DoesEntityExist(entity) then break end
 			end
 			ResetEntityAlpha(entity)
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Pushy!", -- based upon Repelo Muggletum (Repels Muggles)
@@ -62,7 +68,9 @@ Config.Spells = {
 				local curr = GetEntityVelocity(entity)
 				SetEntityVelocity(entity, x * 500.0, y * 500.0, curr.z)
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 2000 -- 2 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Assession!", -- based upon Alarte Ascendare/Ascendio
@@ -73,7 +81,9 @@ Config.Spells = {
 				local curr = GetEntityVelocity(entity)
 				SetEntityVelocity(entity, curr.x, curr.y,  50.0)
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 2000 -- 2 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Handyman Sam!", -- based upon Reparo
@@ -93,7 +103,9 @@ Config.Spells = {
 					SetVehicleOnGroundProperly(entity)
 				end
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 1000 -- 1 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Touch Down!", -- based on Deprimo/Descendo
@@ -104,7 +116,9 @@ Config.Spells = {
 				local curr = GetEntityVelocity(entity)
 				SetEntityVelocity(entity, curr.x, curr.y, -250.0)
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 2000 -- 2 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Slow Poke!", -- based upon Arresto Momentum
@@ -115,7 +129,9 @@ Config.Spells = {
 				local curr = GetEntityVelocity(entity)
 				SetEntityVelocity(entity, curr.x / 2, -curr.y / 2, curr.z / 2)
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 4500 -- 4.5 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Snow Balling!", -- based upon (Bewitched Snowballs)
@@ -133,7 +149,9 @@ Config.Spells = {
 				ShootSingleBulletBetweenCoords(a.x, a.y, a.z, coords.x, coords.y, coords.z , 5.0, false, "weapon_snowball", PlayerPedId(), true, false, 1.0)
 				Wait(50)
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 500 -- 0.5 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Ice Ice, Baby!", -- based on Petrificus Totalus
@@ -145,7 +163,9 @@ Config.Spells = {
 				if IsEntityAPed(entity) then ClearPedTasks(entity) SetBlockingOfNonTemporaryEvents(entity, not curr) end
 				FreezeEntityPosition(entity, not curr)
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 1000 -- 1 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Just Dance!", -- based on Tarantallegra
@@ -171,7 +191,9 @@ Config.Spells = {
 					RemoveAnimDict("anim@amb@nightclub@lazlow@hi_railing@")
 				end
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 1400 -- 1.5 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Flappy Bird!", -- based on Avis/Oppugno
@@ -192,7 +214,9 @@ Config.Spells = {
 				end
 			end
 			SetModelAsNoLongerNeeded("a_c_cormorant")
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 10000 -- 10 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Abra Kadabra!", -- based upon Avada Kedavra
@@ -204,7 +228,9 @@ Config.Spells = {
 					SetEntityHealth(entity, 0)
 				end
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 60000 -- 1 minute - set to 1 to disable cooldown
 	},
 	{
 		name = "ExeliArmPits!", -- Based upon Expelliarmus
@@ -216,7 +242,9 @@ Config.Spells = {
 					SetCurrentPedWeapon(entity, "weapon_unarmed", true)
 				end
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 2500 -- 2.5 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "No Pain, No Gain!", -- Based upon Crucio
@@ -231,7 +259,9 @@ Config.Spells = {
 					SetPedToRagdoll(entity, 1000, 1000, 0, false, false, false)
 				end
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Epstein!", -- based upon Episkey
@@ -245,7 +275,9 @@ Config.Spells = {
 					end
 				end
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 2 * 60000 -- 2 minutes - set to 1 to disable cooldown
 	},
 	{ 
 		name = "Reversey!",
@@ -256,6 +288,8 @@ Config.Spells = {
 				local curr = GetEntityVelocity(entity)
 				SetEntityVelocity(entity, -curr.x * 60.0, -curr.y * 60.0, curr.z)
 			end
-		end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
 	},
 }

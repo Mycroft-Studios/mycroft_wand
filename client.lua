@@ -40,7 +40,7 @@ RegisterCommand('wand', function()
 	local weapon = GetCurrentPedWeaponEntityIndex(ped)
 	if wanding then
 		UseParticleFxAsset("core")
-		Handle = StartNetworkedParticleFxLoopedOnEntity("veh_light_red_trail", weapon, 0.45, 0.0, 0.1, 0.0, 0.0, 0.0, 0.3, true, true, true)
+		Handle = StartNetworkedParticleFxLoopedOnEntity("veh_light_red_trail", weapon, 0.35, 0.0, 0.1, 0.0, 0.0, 0.0, 0.3, true, true, true)
 		SetParticleFxLoopedEvolution(Handle, "speed", 1.0, false)
 		SetParticleFxLoopedColour(Handle, 0.0, 1.0, 0.0, false)
 		SetParticleFxLoopedAlpha(Handle, 100.0)
@@ -58,39 +58,46 @@ RegisterCommand('wand', function()
 		weapon = GetCurrentPedWeaponEntityIndex(ped)
 		if weapon ~= oldweapon then
 			oldweapon = weapon
+			RemoveParticleFx(Handle, false)
 			UseParticleFxAsset("core")
-			Handle = StartNetworkedParticleFxLoopedOnEntity("veh_light_red_trail", weapon, 0.45, 0.0, 0.1, 0.0, 0.0, 0.0, 0.3, true, true, true)
+			Handle = StartNetworkedParticleFxLoopedOnEntity("veh_light_red_trail", weapon, 0.35, 0.0, 0.1, 0.0, 0.0, 0.0, 0.3, true, true, true)
 			SetParticleFxLoopedEvolution(Handle, "speed", 1.0, false)
-			SetParticleFxLoopedColour(Handle, 0.0, 1.0, 0.0, false)
+			SetParticleFxLoopedColour(Handle, 10.0, 200.0, 0.0, false)
 			SetParticleFxLoopedAlpha(Handle, 100.0)
 		end
 		if IsPlayerFreeAiming(player) then
 			if IsDisabledControlJustPressed(0, 24) then
-				local l,c, e = RayCastGamePlayCamera(1000.0)
-				if l then
-					local dist = #(Coords - c)
-					local coords = GetEntityCoords(weapon)
-					RequestModel("prop_poolball_cue") while not HasModelLoaded("prop_poolball_cue") do Wait(0) end
-					obj = CreateObject(`prop_poolball_cue`, coords.x, coords.y, coords.z, false, false, false)
-					SetEntityAsMissionEntity(obj, true, true)
-					SetEntityCompletelyDisableCollision(obj, true, false)
-					UseParticleFxAsset("core")
-					Handle2 = StartParticleFxLoopedOnEntity("proj_flare_trail", obj, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, true, true, true)
-					SetParticleFxLoopedEvolution(Handle2, "speed", 0.5, false)
-					SetParticleFxLoopedColour(Handle2, 0.0, 1.0, 0.0, false)
-					SetParticleFxLoopedAlpha(Handle2, 100.0)
-					local time = 0
-					while not SlideObject(obj, c.x, c.y, c.z, 1.0, 1.0, 1.0, false) do
-						Wait(0)
-						DrawSpellDescription()
-						DrawSpellName({200, 50, 50})
-						if not IsPlayerFreeAiming(player) then  RemoveParticleFxFromEntity(obj) DeleteEntity(obj) obj = nil break end
+				if Config.Spells[currentSpell].CanUse then
+					local l,c, e = RayCastGamePlayCamera(1000.0)
+					if l then
+						local dist = #(Coords - c)
+						local coords = GetEntityCoords(weapon)
+						RequestModel("prop_poolball_cue") while not HasModelLoaded("prop_poolball_cue") do Wait(0) end
+						obj = CreateObject(`prop_poolball_cue`, coords.x, coords.y, coords.z, false, false, false)
+						SetEntityAsMissionEntity(obj, true, true)
+						SetEntityCompletelyDisableCollision(obj, true, false)
+						UseParticleFxAsset("core")
+						Handle2 = StartParticleFxLoopedOnEntity("proj_flare_trail", obj, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.5, true, true, true)
+						SetParticleFxLoopedEvolution(Handle2, "speed", 0.5, false)
+						SetParticleFxLoopedColour(Handle2, 0.0, 1.0, 0.0, false)
+						SetParticleFxLoopedAlpha(Handle2, 100.0)
+						local time = 0
+						while not SlideObject(obj, c.x, c.y, c.z, 1.0, 1.0, 1.0, false) do
+							Wait(0)
+							DrawSpellDescription()
+							DrawSpellName({200, 50, 50})
+							if not IsPlayerFreeAiming(player) then RemoveParticleFxFromEntity(obj) DeleteEntity(obj) obj = nil break end
+						end
+						RemoveParticleFxFromEntity(obj)
+						DeleteEntity(obj)
 					end
-					RemoveParticleFxFromEntity(obj)
-					DeleteEntity(obj)
+					--ShootSingleBulletBetweenCoords(Coords. x , Coords.y, Coords.z + 0.3, c.x, c.y,c.z, 0.0, true, "weapon_flaregun", ped, false, false, 1.0)
+					Config.Spells[currentSpell].action(l,c,e)
+					Config.Spells[currentSpell].CanUse = false
+					SetTimeout(Config.Spells[currentSpell].Cooldown, function()
+						Config.Spells[currentSpell].CanUse = true
+					end)
 				end
-				--ShootSingleBulletBetweenCoords(Coords. x , Coords.y, Coords.z + 0.3, c.x, c.y,c.z, 0.0, true, "weapon_flaregun", ped, false, false, 1.0)
-				Config.Spells[currentSpell].action(l,c,e)
 			end
 		else
 			if obj then 
@@ -101,8 +108,12 @@ RegisterCommand('wand', function()
 		getsuc, wephash = GetCurrentPedWeapon(ped, true)
 		if not getsuc then RemoveParticleFx(Handle, false) wanding = false break end
 		if wephash ~= Config.ModelName then RemoveParticleFx(Handle, false) wanding = false break end
-		DrawSpellDescription()
-		DrawSpellName()
+		if Config.Spells[currentSpell].CanUse then
+			DrawSpellName()
+		else 
+			DrawSpellName({50, 50, 200})
+		end
+			DrawSpellDescription()
 		Wait(0)
 	end
 	RemoveNamedPtfxAsset("core") -- Clean up
