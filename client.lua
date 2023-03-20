@@ -93,8 +93,9 @@ RegisterCommand('wand', function()
 					end
 					Config.Spells[currentSpell].action(l,c,e)
 					Config.Spells[currentSpell].CanUse = false
+					local currspell = currentSpell
 					SetTimeout(Config.Spells[currentSpell].Cooldown, function()
-						Config.Spells[currentSpell].CanUse = true
+						Config.Spells[currspell].CanUse = true
 					end)
 				end
 			end
@@ -164,9 +165,9 @@ RegisterKeyMapping("lastspell", "Previous Spell", "keyboard", "PAGEDOWN")
 RegisterKeyMapping("wand", "Ready Wand", "keyboard", "HOME")
 
 -- credit: https://forum.cfx.re/t/get-camera-coordinates/183555/14
+
 function RotationToDirection(rotation)
-	local adjustedRotataion = 
-	{ 
+	local adjustedRotation = {
 		x = (math.pi / 180) * rotation.x, 
 		y = (math.pi / 180) * rotation.y, 
 		z = (math.pi / 180) * rotation.z 
@@ -184,8 +185,7 @@ function RayCastGamePlayCamera(distance)
 	local cameraRotation = GetGameplayCamRot(0)
 	local cameraCoord = GetGameplayCamCoord()
 	local direction = RotationToDirection(cameraRotation)
-	local destination = 
-	{ 
+	local destination = { 
 		x = cameraCoord.x + direction.x * distance, 
 		y = cameraCoord.y + direction.y * distance, 
 		z = cameraCoord.z + direction.z * distance 
