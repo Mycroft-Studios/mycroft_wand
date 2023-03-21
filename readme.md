@@ -1,6 +1,6 @@
 <h1 align='center'>[Mycroft] Wand</a></h1><p align='center'><b>Harry Potter Inspired Wands in FiveM!</b></h5>
 
-["listen here, Hargid, you FAT OAF... I'm not a FUCKING WIZARD" ~ Harry Potter](https://www.youtube.com/watch?v=IqUN4YdQgVQ)
+["listen here, Hagrid, you FAT OAF... I'm not a FUCKING WIZARD" ~ Harry Potter](https://www.youtube.com/watch?v=IqUN4YdQgVQ)
 
 Allow players to become Harry Potter today! With this highly unique script that Adds spell from the actual Harry Potter Universe into FiveM!
 What are you waiting For? Hop on your broom and become the WiZ-Wiz-Wizard you have always wanted to be!
