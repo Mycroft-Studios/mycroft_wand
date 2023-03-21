@@ -19,6 +19,33 @@ local wanding = false
 local currentSpell = 1
 local Handle = nil
 local obj = nil
+local EnabledParticles = {}
+RegisterNetEvent("wand:startParticles", function(player, netid)
+	local currId = GetPlayerServerId(PlayerId())
+	local Ped = player == currId and PlayerPedId() or NetToPed(netid)
+	if not HasNamedPtfxAssetLoaded("core") then
+		RequestNamedPtfxAsset("core")
+		while not HasNamedPtfxAssetLoaded("core") do
+			Wait(10)
+		end
+	end
+	if not Ped or Ped == 0 or not DoesEntityExist(Ped) then return end
+	local weapon = GetCurrentPedWeaponEntityIndex(Ped)
+	if not weapon or not DoesEntityExist(weapon) then return end
+	UseParticleFxAsset("core")
+	local handle = StartNetworkedParticleFxLoopedOnEntity("veh_light_red_trail", weapon, 0.35, 0.0, 0.1, 0.0, 0.0, 0.0, 0.3, true, true, true)
+	SetParticleFxLoopedEvolution(handle, "speed", 1.0, false)
+	SetParticleFxLoopedColour(handle, 0.0, 1.0, 0.0, false)
+	SetParticleFxLoopedAlpha(handle, 100.0)
+	EnabledParticles[player] = handle
+end)
+
+RegisterNetEvent("wand:removeParticles", function(player)
+	if not EnabledParticles[player] then return end
+	RemoveParticleFx(EnabledParticles[player], false)
+	EnabledParticles[player] = nil
+end)
+
 RegisterCommand('wand', function()
 	local ped = PlayerPedId()
 	local getsuc, wephash = GetCurrentPedWeapon(ped, true)
@@ -26,48 +53,21 @@ RegisterCommand('wand', function()
 	if wephash ~= Config.ModelName then return end
 
 	wanding = not wanding
-	if not wanding then return RemoveParticleFx(Handle, false) end
+	if not wanding then return TriggerServerEvent("wand:disableParticles") end
 	local player = PlayerId()
 
-	if not HasNamedPtfxAssetLoaded("core") then
-		RequestNamedPtfxAsset("core")
-		while not HasNamedPtfxAssetLoaded("core") do
-			Wait(10)
-		
-		end
-	end
-
 	local weapon = GetCurrentPedWeaponEntityIndex(ped)
-	if wanding then
-		UseParticleFxAsset("core")
-		Handle = StartNetworkedParticleFxLoopedOnEntity("veh_light_red_trail", weapon, 0.35, 0.0, 0.1, 0.0, 0.0, 0.0, 0.3, true, true, true)
-		SetParticleFxLoopedEvolution(Handle, "speed", 1.0, false)
-		SetParticleFxLoopedColour(Handle, 0.0, 1.0, 0.0, false)
-		SetParticleFxLoopedAlpha(Handle, 100.0)
-	else
-		SetParticleFxLoopedEvolution(Handle, "speed", 1.0, false)
-		SetParticleFxLoopedColour(Handle, 0.1, 1.0, 0.0, false)
-	end
+	TriggerServerEvent("wand:enableParticles")
 	while wanding do
 		SetPedAmmo(ped, Config.ModelName, 0)
 		DisableControlAction(0, 24, true)
 		DisablePlayerFiring(player, true)
 		ped = PlayerPedId()
 
-		local oldweapon = weapon
-		weapon = GetCurrentPedWeaponEntityIndex(ped)
-		if weapon ~= oldweapon then
-			oldweapon = weapon
-			RemoveParticleFx(Handle, false)
-			UseParticleFxAsset("core")
-			Handle = StartNetworkedParticleFxLoopedOnEntity("veh_light_red_trail", weapon, 0.35, 0.0, 0.1, 0.0, 0.0, 0.0, 0.3, true, true, true)
-			SetParticleFxLoopedEvolution(Handle, "speed", 1.0, false)
-			SetParticleFxLoopedColour(Handle, 10.0, 200.0, 0.0, false)
-			SetParticleFxLoopedAlpha(Handle, 100.0)
-		end
 		if IsPlayerFreeAiming(player) then
 			if IsDisabledControlJustPressed(0, 24) then
-				if Config.Spells[currentSpell].CanUse then
+				local spell = Config.Spells[currentSpell]
+				if spell.CanUse then
 					local l,c, e = RayCastGamePlayCamera(1000.0)
 					if l then
 
@@ -90,8 +90,15 @@ RegisterCommand('wand', function()
 						end
 						RemoveParticleFxFromEntity(obj)
 						DeleteEntity(obj)
+						if spell.AgainstOthers and e and DoesEntityExist(e) and IsPedAPlayer(e) then
+							local index = NetworkGetPlayerIndexFromPed(e)
+							local id = GetPlayerServerId(index)
+							TriggerServerEvent("wand:HitPlayer", id, currentSpell, c)
+							goto skip_action
+						end
 					end
-					Config.Spells[currentSpell].action(l,c,e)
+					spell.action(l,c,e)
+					:: skip_action ::
 					Config.Spells[currentSpell].CanUse = false
 					local currspell = currentSpell
 					SetTimeout(Config.Spells[currentSpell].Cooldown, function()
@@ -106,8 +113,8 @@ RegisterCommand('wand', function()
 			end
 		end
 		getsuc, wephash = GetCurrentPedWeapon(ped, true)
-		if not getsuc then RemoveParticleFx(Handle, false) wanding = false break end
-		if wephash ~= Config.ModelName then RemoveParticleFx(Handle, false) wanding = false break end
+		if not getsuc then TriggerServerEvent("wand:disableParticles")  wanding = false break end
+		if wephash ~= Config.ModelName then TriggerServerEvent("wand:disableParticles")  wanding = false break end
 		if Config.Spells[currentSpell].CanUse then
 			DrawSpellName()
 		else 
@@ -193,3 +200,10 @@ function RayCastGamePlayCamera(distance)
 	local a, b, c, d, e = GetShapeTestResult(StartExpensiveSynchronousShapeTestLosProbe(cameraCoord.x, cameraCoord.y, cameraCoord.z, destination.x, destination.y, destination.z, -1, -1, 1))
 	return b, c, e
 end
+
+RegisterNetEvent("Wand:ActivateSpell", function(data)
+	if not Config.Spells[data.id] then 
+		return
+	end
+	Config.Spells[data.id].action(true, data.coords, PlayerPedId())
+end)

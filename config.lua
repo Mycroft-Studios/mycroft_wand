@@ -8,7 +8,8 @@ Config.Spells = {
 			AddExplosion(coords.x, coords.y, coords.z, 9, 100.0, true, false, 0)
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable spell :)
-        Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
+        Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
+		AgainstOthers = false -- set to true if another player is required to execute
 	},
 	{
 		name = "Spawnus My Anus!", -- based upon Erecto - Erects tents or other structures
@@ -27,7 +28,8 @@ Config.Spells = {
 			SetEntityAsNoLongerNeeded(obj)
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
+        Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
+		AgainstOthers = false -- set to true if another player is required to execute
 	},
 	{
 		name = "Transformers Assemble!", -- based upon Vera Verto - transfiguration spell to turn animals into water goblets.
@@ -48,10 +50,12 @@ Config.Spells = {
 			local obj = CreateObject(joaat(currentObj), entity_coords.x, entity_coords.y, entity_coords.z, true, false, false)
 			SetEntityHeading(obj, math.random(-180, 180))
 			ActivatePhysics(obj)
+			--SetEntityVelocity(obj, entity_velocity)
 			SetEntityAsNoLongerNeeded(obj)
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 2000 -- 2 seconds - set to 1 to disable cooldown
+        Cooldown = 1000, -- 5 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{
 		name = "WingGuard la LeviAsshole!", -- based upon wingardium leviosa
@@ -79,7 +83,8 @@ Config.Spells = {
 			ResetEntityAlpha(entity)
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 3000 -- 3 seconds - set to 1 to disable cooldown
+        Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
+		AgainstOthers = false -- set to true if another player is required to execute
 	},
 	{
 		name = "Pushy!", -- based upon Repelo Muggletum (Repels Muggles)
@@ -94,7 +99,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 2000 -- 2 seconds - set to 1 to disable cooldown
+        Cooldown = 2000, -- 2 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{
 		name = "Assession!", -- based upon Alarte Ascendare/Ascendio
@@ -107,7 +113,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 2000 -- 2 seconds - set to 1 to disable cooldown
+        Cooldown = 2000, -- 2 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{
 		name = "Handyman Sam!", -- based upon Reparo
@@ -126,10 +133,17 @@ Config.Spells = {
 					SetVehicleDirtLevel(entity, 0.0)
 					SetVehicleOnGroundProperly(entity)
 				end
+				if entity == PlayerPedId() then
+					ResurrectPed(entity)
+					local coords = GetEntityCoords(entity)
+					NetworkResurrectLocalPlayer(coords.x, coords.x, coords.z + 0.5, 0.0, false, false)
+					SetEntityHealth(entity, GetEntityMaxHealth(entity))
+				end
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 1000 -- 1 seconds - set to 1 to disable cooldown
+        Cooldown = 1000, -- 1 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{
 		name = "Touch Down!", -- based on Deprimo/Descendo
@@ -142,7 +156,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 2000 -- 2 seconds - set to 1 to disable cooldown
+        Cooldown = 1000, -- 1 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{
 		name = "Slow Poke!", -- based upon Arresto Momentum
@@ -155,7 +170,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 4500 -- 4.5 seconds - set to 1 to disable cooldown
+        Cooldown = 2500, -- 2.5 seconds - set to 1 to disable cooldown
+		AgainstOthers = true, -- set to true if another player is required to execute
 	},
 	{
 		name = "Snow Balling!", -- based upon (Bewitched Snowballs)
@@ -175,7 +191,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 500 -- 0.5 seconds - set to 1 to disable cooldown
+        Cooldown = 500, -- 0.5 seconds - set to 1 to disable cooldown
+		AgainstOthers = false -- set to true if another player is required to execute
 	},
 	{
 		name = "Ice Ice, Baby!", -- based on Petrificus Totalus
@@ -189,7 +206,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 1000 -- 1 seconds - set to 1 to disable cooldown
+        Cooldown = 1000, -- 1 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{
 		name = "Just Dance!", -- based on Tarantallegra
@@ -217,7 +235,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 1500 -- 1.5 seconds - set to 1 to disable cooldown
+        Cooldown = 1400, -- 1.5 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{
 		name = "Flappy Bird!", -- based on Avis/Oppugno
@@ -240,7 +259,8 @@ Config.Spells = {
 			SetModelAsNoLongerNeeded("a_c_cormorant")
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 10000 -- 10 seconds - set to 1 to disable cooldown
+        Cooldown = 1, --10000 -- 10 seconds - set to 1 to disable cooldown
+		AgainstOthers = false -- set to true if another player is required to execute
 	},
 	{
 		name = "Abra Kadabra!", -- based upon Avada Kedavra
@@ -254,7 +274,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 60000 -- 1 minute - set to 1 to disable cooldown
+        Cooldown = 1, -- 60000 -- 1 minute - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{
 		name = "ExeliArmPits!", -- Based upon Expelliarmus
@@ -268,7 +289,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 2500 -- 2.5 seconds - set to 1 to disable cooldown
+        Cooldown = 2500, -- 2.5 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{
 		name = "No Pain, No Gain!", -- Based upon Crucio
@@ -285,7 +307,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
+        Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{
 		name = "Epstein!", -- based upon Episkey
@@ -301,7 +324,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 2 * 60000 -- 2 minutes - set to 1 to disable cooldown
+        Cooldown = 2 * 60000, -- 2 minutes - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 	{ 
 		name = "Reversey!",
@@ -314,7 +338,8 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
+        Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
 	},
 }
 
