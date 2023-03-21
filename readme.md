@@ -19,11 +19,12 @@ What are you waiting For? Hop on your broom and become the WiZ-Wiz-Wizard you ha
 - Cuurent Spell drawn on screen
 - Colour Coded Spell Status (White: `available`, Red: `In Use`, Blue: `Cooldown`)
 - Actual Wand Model - [Download Here](https://www.gta5-mods.com/weapons/harry-potter-wand)
+- Dildos
 - MAYHEM AND CARNAGE
 
 ## Preview
 
-[![](https://i.imgur.com/cmRZ5UV.png)](https://youtu.be/AGNsvUkvNJI)
+[![](https://i.imgur.com/cmRZ5UV.png)](https://www.youtube.com/watch?v=YmhXaU7ilq0)
 
 <br>
 <table><tr><td><h4 align='center'>Legal Notices</h4></tr></td>

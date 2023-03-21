@@ -48,11 +48,10 @@ Config.Spells = {
 			local obj = CreateObject(joaat(currentObj), entity_coords.x, entity_coords.y, entity_coords.z, true, false, false)
 			SetEntityHeading(obj, math.random(-180, 180))
 			ActivatePhysics(obj)
-			--SetEntityVelocity(obj, entity_velocity)
 			SetEntityAsNoLongerNeeded(obj)
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 1000 -- 5 seconds - set to 1 to disable cooldown
+        Cooldown = 2000 -- 2 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "WingGuard la LeviAsshole!", -- based upon wingardium leviosa
@@ -80,7 +79,7 @@ Config.Spells = {
 			ResetEntityAlpha(entity)
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
+        Cooldown = 3000 -- 3 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Pushy!", -- based upon Repelo Muggletum (Repels Muggles)
@@ -143,7 +142,7 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown =  1--2000 -- 2 seconds - set to 1 to disable cooldown
+        Cooldown = 2000 -- 2 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Slow Poke!", -- based upon Arresto Momentum
@@ -218,7 +217,7 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 1400 -- 1.5 seconds - set to 1 to disable cooldown
+        Cooldown = 1500 -- 1.5 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Flappy Bird!", -- based on Avis/Oppugno
@@ -241,7 +240,7 @@ Config.Spells = {
 			SetModelAsNoLongerNeeded("a_c_cormorant")
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 1 --10000 -- 10 seconds - set to 1 to disable cooldown
+        Cooldown = 10000 -- 10 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Abra Kadabra!", -- based upon Avada Kedavra
@@ -255,7 +254,7 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 0 -- 60000 -- 1 minute - set to 1 to disable cooldown
+        Cooldown = 60000 -- 1 minute - set to 1 to disable cooldown
 	},
 	{
 		name = "ExeliArmPits!", -- Based upon Expelliarmus
