@@ -97,7 +97,7 @@ RegisterCommand('wand', function()
 							goto skip_action
 						end
 					end
-					spell.action(l,c,e)
+					spell.action(l,c,e, false)
 					:: skip_action ::
 					Config.Spells[currentSpell].CanUse = false
 					local currspell = currentSpell
@@ -205,5 +205,5 @@ RegisterNetEvent("Wand:ActivateSpell", function(data)
 	if not Config.Spells[data.id] then 
 		return
 	end
-	Config.Spells[data.id].action(true, data.coords, PlayerPedId())
+	Config.Spells[data.id].action(true, data.coords, PlayerPedId(), true)
 end)

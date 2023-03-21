@@ -4,7 +4,7 @@ Config.Spells = {
 	{
 		name = "BoomBoom!", -- based on Expulso
 		description = "Expulso -> Spawns Explosions",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			AddExplosion(coords.x, coords.y, coords.z, 9, 100.0, true, false, 0)
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable spell :)
@@ -14,7 +14,7 @@ Config.Spells = {
 	{
 		name = "Spawnus My Anus!", -- based upon Erecto - Erects tents or other structures
 		description = "Erecto -> Spawns Objects",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			local x = GetEntityForwardX(PlayerPedId())
 			local y = GetEntityForwardY(PlayerPedId())
 			local Coords = GetEntityCoords(PlayerPedId())
@@ -34,7 +34,7 @@ Config.Spells = {
 	{
 		name = "Transformers Assemble!", -- based upon Vera Verto - transfiguration spell to turn animals into water goblets.
 		description = "Vera Verto -> Turns Entities into Dildos",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if not entity or not DoesEntityExist(entity) then return end
 			NetworkRequestControlOfEntity(entity)
@@ -60,7 +60,7 @@ Config.Spells = {
 	{
 		name = "WingGuard la LeviAsshole!", -- based upon wingardium leviosa
 		description = "wingardium leviosa -> Levitate Objects",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			local offset = #(GetEntityCoords(PlayerPedId()) - GetEntityCoords(entity))
 			if not hit then return end
 			if not entity or not DoesEntityExist(entity) then return end
@@ -89,7 +89,7 @@ Config.Spells = {
 	{
 		name = "Pushy!", -- based upon Repelo Muggletum (Repels Muggles)
 		description = "Repelo Muggletum -> Repels Muggles",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				local x = GetEntityForwardX(PlayerPedId())
@@ -105,7 +105,7 @@ Config.Spells = {
 	{
 		name = "Assession!", -- based upon Alarte Ascendare/Ascendio
 		description = "Ascendio -> Makes Entities Fly",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				local curr = GetEntityVelocity(entity)
@@ -119,7 +119,7 @@ Config.Spells = {
 	{
 		name = "Handyman Sam!", -- based upon Reparo
 		description = "Reparo -> Fixes/Revives Entities",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then 
 				if GetEntityType(entity) == 1 then
@@ -148,7 +148,7 @@ Config.Spells = {
 	{
 		name = "Touch Down!", -- based on Deprimo/Descendo
 		description = "Descendo -> Brings Entity to the earth",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				local curr = GetEntityVelocity(entity)
@@ -162,7 +162,7 @@ Config.Spells = {
 	{
 		name = "Slow Poke!", -- based upon Arresto Momentum
 		description = "Arresto Momentum -> Slow Down entities",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				local curr = GetEntityVelocity(entity)
@@ -176,7 +176,7 @@ Config.Spells = {
 	{
 		name = "Snow Balling!", -- based upon (Bewitched Snowballs)
 		description = "Bewitched Snowballs -> Launch Snowballs",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			RequestWeaponAsset("weapon_snowball", 31, 0)
 			while not HasWeaponAssetLoaded("weapon_snowball") do Wait(0) end
@@ -197,7 +197,7 @@ Config.Spells = {
 	{
 		name = "Ice Ice, Baby!", -- based on Petrificus Totalus
 		description = "Petrificus Totalus -> Feeze Entites",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				local curr = IsEntityPositionFrozen(entity)
@@ -212,7 +212,7 @@ Config.Spells = {
 	{
 		name = "Just Dance!", -- based on Tarantallegra
 		description = "Tarantallegra -> Forces Ped to Dance",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				if GetEntityType(entity) == 1 then
@@ -265,7 +265,7 @@ Config.Spells = {
 	{
 		name = "Abra Kadabra!", -- based upon Avada Kedavra
 		description = "Avada Kedavra -> Insta-Kill any Ped",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				if GetEntityType(entity) == 1 then
@@ -280,7 +280,7 @@ Config.Spells = {
 	{
 		name = "ExeliArmPits!", -- Based upon Expelliarmus
 		description = "Expelliarmus -> Unarms Peds",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				if GetEntityType(entity) == 1 then
@@ -295,7 +295,7 @@ Config.Spells = {
 	{
 		name = "No Pain, No Gain!", -- Based upon Crucio
 		description = "Crucio -> Torture Peds",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				if GetEntityType(entity) == 1 then
@@ -313,7 +313,7 @@ Config.Spells = {
 	{
 		name = "Epstein!", -- based upon Episkey
 		description = "Episkey -> Heals Minor Injuries",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				if GetEntityType(entity) == 1 then
@@ -330,12 +330,33 @@ Config.Spells = {
 	{ 
 		name = "Reversey!",
 		description = "Reverses an Entities Velocity",
-		action = function(hit, coords, entity)
+		action = function(hit, coords, entity, remote)
 			if not hit then return end
 			if entity and DoesEntityExist(entity) then
 				local curr = GetEntityVelocity(entity)
 				SetEntityVelocity(entity, -curr.x * 60.0, -curr.y * 60.0, curr.z)
 			end
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
+		AgainstOthers = true -- set to true if another player is required to execute
+	},
+	{ 
+		name = "Shape Shifter!",
+		description = "Changes Another Players Model!",
+		action = function(hit, coords, entity, remote)
+			if not hit then return end
+			if not remote then return end
+			local modelList = {"mp_f_stripperlite", "mp_m_bogdangoon","u_m_y_mani","u_m_y_justin","u_m_y_staggrm_01", "u_m_y_pogo_01","u_m_y_rsranger_01", "a_c_crow","u_m_y_imporage", "a_c_cow", "a_m_y_hipster_02", "a_m_m_tranvest_01", "a_f_m_beach_01", "mp_m_niko_01"}
+			local model = joaat(modelList[math.random(1, #modelList)])
+			if IsModelInCdimage(model) and IsModelValid(model) then
+				RequestModel(model)
+				while not HasModelLoaded(model) do
+				  Wait(0)
+				end
+				SetPlayerModel(PlayerId(), model)
+				SetModelAsNoLongerNeeded(model)
+			  end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
