@@ -81,7 +81,7 @@ RegisterCommand('wand', function()
 						SetParticleFxLoopedEvolution(Handle2, "speed", 0.5, false)
 						SetParticleFxLoopedColour(Handle2, 0.0, 1.0, 0.0, false)
 						SetParticleFxLoopedAlpha(Handle2, 100.0)
-
+						
 						while not SlideObject(obj, c.x, c.y, c.z, 1.0, 1.0, 1.0, false) do
 							Wait(0)
 							DrawSpellDescription()

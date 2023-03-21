@@ -30,6 +30,31 @@ Config.Spells = {
         Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
 	},
 	{
+		name = "Transformers Assemble!", -- based upon Vera Verto - transfiguration spell to turn animals into water goblets.
+		description = "Vera Verto -> Turns Entities into Dildos",
+		action = function(hit, coords, entity)
+			if not hit then return end
+			if not entity or not DoesEntityExist(entity) then return end
+			NetworkRequestControlOfEntity(entity)
+			while not NetworkHasControlOfEntity(entity) do 
+				Wait(0)
+			end
+			SetEntityAsMissionEntity(entity, true, true)
+			local entity_coords = GetEntityCoords(entity) or coords
+			local entity_velocity = GetEntityVelocity(entity)
+			local currentObj = "v_res_d_dildo_f"
+			DeleteEntity(entity)
+			RequestModel(currentObj) while not HasModelLoaded(currentObj) do Wait(0) end
+			local obj = CreateObject(joaat(currentObj), entity_coords.x, entity_coords.y, entity_coords.z, true, false, false)
+			SetEntityHeading(obj, math.random(-180, 180))
+			ActivatePhysics(obj)
+			--SetEntityVelocity(obj, entity_velocity)
+			SetEntityAsNoLongerNeeded(obj)
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 1000 -- 5 seconds - set to 1 to disable cooldown
+	},
+	{
 		name = "WingGuard la LeviAsshole!", -- based upon wingardium leviosa
 		description = "wingardium leviosa -> Levitate Objects",
 		action = function(hit, coords, entity)
@@ -118,7 +143,7 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 2000 -- 2 seconds - set to 1 to disable cooldown
+        Cooldown =  1--2000 -- 2 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Slow Poke!", -- based upon Arresto Momentum
@@ -140,7 +165,7 @@ Config.Spells = {
 			if not hit then return end
 			RequestWeaponAsset("weapon_snowball", 31, 0)
 			while not HasWeaponAssetLoaded("weapon_snowball") do Wait(0) end
-			for i = 1, 5 do
+			for i = 1, 15 do
 				if not IsPlayerFreeAiming(PlayerId()) then 
 					return
 				end
@@ -208,7 +233,7 @@ Config.Spells = {
 				Wait(40)
 				SetEntityVelocity(bird, x * math.random(50, 60), y * math.random(50, 60), math.random(5, 10))
 				SetEntityAsNoLongerNeeded(bird)
-				Wait(10)
+				Wait(5)
 				if not IsPlayerFreeAiming(PlayerId()) then
 					break
 				end
@@ -216,7 +241,7 @@ Config.Spells = {
 			SetModelAsNoLongerNeeded("a_c_cormorant")
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 10000 -- 10 seconds - set to 1 to disable cooldown
+        Cooldown = 1 --10000 -- 10 seconds - set to 1 to disable cooldown
 	},
 	{
 		name = "Abra Kadabra!", -- based upon Avada Kedavra
@@ -230,7 +255,7 @@ Config.Spells = {
 			end
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
-        Cooldown = 60000 -- 1 minute - set to 1 to disable cooldown
+        Cooldown = 0 -- 60000 -- 1 minute - set to 1 to disable cooldown
 	},
 	{
 		name = "ExeliArmPits!", -- Based upon Expelliarmus
@@ -293,3 +318,4 @@ Config.Spells = {
         Cooldown = 5000 -- 5 seconds - set to 1 to disable cooldown
 	},
 }
+
