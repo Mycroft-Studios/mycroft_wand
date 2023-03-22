@@ -19,7 +19,6 @@ AddEventHandler("playerEnteredScope", function(data)
     if Player(playerEntering).state.wanding then
         TriggerClientEvent("wand:startParticles", player, playerEntering, NetworkGetNetworkIdFromEntity(GetPlayerPed(playerEntering)))
     end
-    print(("%s is entering %s's scope"):format(playerEntering, player))
 end)
 
 AddEventHandler("playerLeftScope", function(data)
@@ -27,5 +26,4 @@ AddEventHandler("playerLeftScope", function(data)
     if Player(playerLeaving).state.wanding then
         TriggerClientEvent("wand:disableParticles", player, playerLeaving)
     end
-    print(("%s is leaving %s's scope"):format(playerLeaving, player))
 end)
