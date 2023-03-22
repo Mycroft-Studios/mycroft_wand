@@ -1,4 +1,8 @@
 RegisterNetEvent("wand:HitPlayer", function(player, spell, coords)
+    local source = source
+    if not Player(source).state.wanding then
+        return
+    end
     TriggerClientEvent("Wand:ActivateSpell", player, {id = spell, coords = coords})
 end)
 
@@ -27,3 +31,12 @@ AddEventHandler("playerLeftScope", function(data)
         TriggerClientEvent("wand:disableParticles", player, playerLeaving)
     end
 end)
+
+RegisterNetEvent("wand:PlayerLevitate", function(ply, coords)
+    local source = source
+    if not Player(source).state.wanding then
+        return
+    end
+    SetEntityCoords(GetPlayerPed(ply), coords)
+end)
+

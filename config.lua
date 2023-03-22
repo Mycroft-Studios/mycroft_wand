@@ -44,7 +44,7 @@ Config.Spells = {
 			SetEntityAsMissionEntity(entity, true, true)
 			local entity_coords = GetEntityCoords(entity) or coords
 			local entity_velocity = GetEntityVelocity(entity)
-			local currentObj = "v_res_d_dildo_f"
+			local currentObj = "amplys_dildo"
 			DeleteEntity(entity)
 			RequestModel(currentObj) while not HasModelLoaded(currentObj) do Wait(0) end
 			local obj = CreateObject(joaat(currentObj), entity_coords.x, entity_coords.y, entity_coords.z, true, false, false)
@@ -76,6 +76,11 @@ Config.Spells = {
 					offset = -offset
 				end
 				local pos = world + normal * offset
+				if GetEntityType(entity) == 1 and IsPedAPlayer(entity) then
+					local index = NetworkGetPlayerIndexFromPed(entity)
+					local id = GetPlayerServerId(index)
+					TriggerServerEvent("wand:PlayerLevitate", id, pos)
+				end
 				SetEntityCoordsNoOffset(entity, pos.x, pos.y, pos.z)
 				Wait(0)
 				if not entity or not DoesEntityExist(entity) then break end
@@ -84,7 +89,7 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
-		AgainstOthers = false -- set to true if another player is required to execute
+		AgainstOthers = false -- DO NOT ENABLE FOR THIS ONE, THIS USES SEPERATE NETWORKING
 	},
 	{
 		name = "Pushy!", -- based upon Repelo Muggletum (Repels Muggles)
