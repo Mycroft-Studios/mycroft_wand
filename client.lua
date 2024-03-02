@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ]]
 local wanding = false
+local isUsingSpell = false
 local currentSpell = 1
 local Handle = nil
 local obj = nil
@@ -65,9 +66,10 @@ RegisterCommand('wand', function()
 		ped = PlayerPedId()
 
 		if IsPlayerFreeAiming(player) then
-			if IsDisabledControlJustPressed(0, 24) then
+			if IsDisabledControlJustPressed(0, 24) and not isUsingSpell then
 				local spell = Config.Spells[currentSpell]
 				if spell.CanUse then
+					isUsingSpell = true
 					local l,c, e = RayCastGamePlayCamera(1000.0)
 					if l then
 
@@ -104,6 +106,7 @@ RegisterCommand('wand', function()
 					SetTimeout(Config.Spells[currentSpell].Cooldown, function()
 						Config.Spells[currspell].CanUse = true
 					end)
+					isUsingSpell = false
 				end
 			end
 		else
@@ -156,14 +159,17 @@ end
 
 
 RegisterCommand('spell', function(src, args)
+	if isUsingSpell then return end
 	currentSpell = tonumber(args[1]) or 1
 end, false)
 
 RegisterCommand('nextspell', function(src, args)
+	if isUsingSpell then return end
 	currentSpell =  (currentSpell < #Config.Spells) and currentSpell + 1 or #Config.Spells
 end, false)
 
 RegisterCommand('lastspell', function(src, args)
+	if isUsingSpell then return end
 	currentSpell =  (currentSpell > 1) and currentSpell - 1 or 1
 end, false)
 
