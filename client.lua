@@ -99,10 +99,9 @@ RegisterCommand('wand', function()
 					end
 					spell.action(l,c,e, false)
 					:: skip_action ::
-					Config.Spells[currentSpell].CanUse = false
-					local currspell = currentSpell
-					SetTimeout(Config.Spells[currentSpell].Cooldown, function()
-						Config.Spells[currspell].CanUse = true
+					spell.CanUse = false
+					SetTimeout(spell.Cooldown, function()
+						spell.CanUse = true
 					end)
 				end
 			end
