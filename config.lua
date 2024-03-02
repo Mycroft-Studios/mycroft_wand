@@ -1,5 +1,7 @@
 Config = {}
 Config.ModelName = `weapon_flaregun`
+Config.UseParticlesForSelfCast = true -- Use a particle effect to show a selfCast happened
+
 Config.Spells = {
 	{
 		name = "BoomBoom!", -- based on Expulso
@@ -9,15 +11,17 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable spell :)
         Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
-		AgainstOthers = false -- set to true if another player is required to execute
+		AgainstOthers = false, -- set to true if another player is required to execute,
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Spawnus My Anus!", -- based upon Erecto - Erects tents or other structures
 		description = "Erecto -> Spawns Objects",
 		action = function(hit, coords, entity, remote)
-			local x = GetEntityForwardX(PlayerPedId())
-			local y = GetEntityForwardY(PlayerPedId())
-			local Coords = GetEntityCoords(PlayerPedId())
+			local playerPed = PlayerPedId()
+			local x = GetEntityForwardX(playerPed)
+			local y = GetEntityForwardY(playerPed)
+			local Coords = GetEntityCoords(playerPed)
 			if not hit then coords = vector3(Coords.x + (x * 6.0), Coords.y + (y * 6.0), Coords.z) end
 			local objList = {"prop_train_ticket_02_tu","v_ind_cfbucket","v_ind_cm_ladder", "prop_mp_conc_barrier_01", "prop_bskball_01","v_ind_cm_tyre08","v_ind_meatclner", "v_ind_rc_shovel", "prop_vend_snak_01_tu", "p_ld_soc_ball_01"}
 			local currentObj = objList[math.random(1, #objList)]
@@ -29,7 +33,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
-		AgainstOthers = false -- set to true if another player is required to execute
+		AgainstOthers = false, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Transformers Assemble!", -- based upon Vera Verto - transfiguration spell to turn animals into water goblets.
@@ -43,19 +48,18 @@ Config.Spells = {
 			end
 			SetEntityAsMissionEntity(entity, true, true)
 			local entity_coords = GetEntityCoords(entity) or coords
-			local entity_velocity = GetEntityVelocity(entity)
 			local currentObj = "amplys_dildo"
 			DeleteEntity(entity)
 			RequestModel(currentObj) while not HasModelLoaded(currentObj) do Wait(0) end
 			local obj = CreateObject(joaat(currentObj), entity_coords.x, entity_coords.y, entity_coords.z, true, false, false)
 			SetEntityHeading(obj, math.random(-180, 180))
 			ActivatePhysics(obj)
-			--SetEntityVelocity(obj, entity_velocity)
 			SetEntityAsNoLongerNeeded(obj)
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 1000, -- 5 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "WingGuard la LeviAsshole!", -- based upon wingardium leviosa
@@ -89,7 +93,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
-		AgainstOthers = false -- DO NOT ENABLE FOR THIS ONE, THIS USES SEPERATE NETWORKING
+		AgainstOthers = false, -- DO NOT ENABLE FOR THIS ONE, THIS USES SEPERATE NETWORKING
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Pushy!", -- based upon Repelo Muggletum (Repels Muggles)
@@ -105,7 +110,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 2000, -- 2 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Assession!", -- based upon Alarte Ascendare/Ascendio
@@ -119,7 +125,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 2000, -- 2 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Handyman Sam!", -- based upon Reparo
@@ -148,7 +155,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 1000, -- 1 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Touch Down!", -- based on Deprimo/Descendo
@@ -162,7 +170,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 1000, -- 1 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Slow Poke!", -- based upon Arresto Momentum
@@ -177,6 +186,19 @@ Config.Spells = {
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 2500, -- 2.5 seconds - set to 1 to disable cooldown
 		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
+	},
+	{
+		name = "Slurp Slurp Juice!", -- based upon Arresto Momentum
+		description = "Ferula -> Heal Self",
+		action = function(hit, coords, entity, remote)
+			local ped = PlayerPedId()
+			SetEntityHealth(ped, GetEntityMaxHealth(ped))
+		end,
+        CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
+        Cooldown = 2500, -- 2.5 seconds - set to 1 to disable cooldown
+		AgainstOthers = false, -- set to true if another player is required to execute
+		selfCast = true, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Snow Balling!", -- based upon (Bewitched Snowballs)
@@ -189,7 +211,6 @@ Config.Spells = {
 				if not IsPlayerFreeAiming(PlayerId()) then 
 					return
 				end
-				local Coords = GetEntityCoords(PlayerPedId())
 				local a = GetPedBoneCoords(PlayerPedId(), GetEntityBoneIndexByName(PlayerPedId(), "SKEL_L_Hand "), 0.0,0.0,0.0)
 				ShootSingleBulletBetweenCoords(a.x, a.y, a.z, coords.x, coords.y, coords.z , 5.0, false, "weapon_snowball", PlayerPedId(), true, false, 1.0)
 				Wait(50)
@@ -197,7 +218,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 500, -- 0.5 seconds - set to 1 to disable cooldown
-		AgainstOthers = false -- set to true if another player is required to execute
+		AgainstOthers = false, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Ice Ice, Baby!", -- based on Petrificus Totalus
@@ -212,7 +234,7 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 1000, -- 1 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
 	},
 	{
 		name = "Just Dance!", -- based on Tarantallegra
@@ -241,7 +263,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 1400, -- 1.5 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Flappy Bird!", -- based on Avis/Oppugno
@@ -265,7 +288,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 1, --10000 -- 10 seconds - set to 1 to disable cooldown
-		AgainstOthers = false -- set to true if another player is required to execute
+		AgainstOthers = false, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Abra Kadabra!", -- based upon Avada Kedavra
@@ -280,7 +304,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 1, -- 60000 -- 1 minute - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "ExeliArmPits!", -- Based upon Expelliarmus
@@ -295,7 +320,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 2500, -- 2.5 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "No Pain, No Gain!", -- Based upon Crucio
@@ -313,7 +339,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{
 		name = "Epstein!", -- based upon Episkey
@@ -330,10 +357,11 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 2 * 60000, -- 2 minutes - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{ 
-		name = "Reversey!",
+		name = "Reverse, Reverse!",
 		description = "Reverses an Entities Velocity",
 		action = function(hit, coords, entity, remote)
 			if not hit then return end
@@ -344,7 +372,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 	{ 
 		name = "Shape Shifter!",
@@ -365,7 +394,8 @@ Config.Spells = {
 		end,
         CanUse = true, -- used for cooldowns, you can also set to false to perm disable :)
         Cooldown = 5000, -- 5 seconds - set to 1 to disable cooldown
-		AgainstOthers = true -- set to true if another player is required to execute
+		AgainstOthers = true, -- set to true if another player is required to execute
+		selfCast = false, -- set to true if spell is to be used on self.
 	},
 }
 
